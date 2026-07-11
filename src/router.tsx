@@ -7,6 +7,7 @@ export const getRouter = () => {
 
   const router = createRouter({
     routeTree,
+    basename: "/core-service-hub",
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
