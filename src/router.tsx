@@ -7,7 +7,7 @@ export const getRouter = () => {
 
   const router = createRouter({
     routeTree,
-    basename: "/core-service-hub",
+    // No basename — this app deploys at the domain root (zeehaancode21.github.io)
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
