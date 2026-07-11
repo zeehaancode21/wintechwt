@@ -8,6 +8,10 @@ export default defineConfig({
     plugins: [
       nitro({
         preset: "static",
+        prerender: {
+          routes: ["/core-service-hub"],
+          crawlLinks: true,
+        },
       }),
     ],
   },
