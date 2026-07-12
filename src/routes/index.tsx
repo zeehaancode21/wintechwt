@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  ArrowRight,
   BadgeCheck,
   Clock,
   ShieldCheck,
@@ -12,12 +11,13 @@ import {
   MessageSquare,
   MapPin,
   ChevronRight,
-  Quote,
 } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { SERVICES } from "@/lib/services";
 import { ServicesGrid } from "@/components/site/ServicesGrid";
+import { HeroSlider } from "@/components/site/HeroSlider";
 import { Counter, Reveal } from "@/components/site/motion";
+import { TestimonialsCarousel, type Testimonial } from "@/components/site/TestimonialsCarousel";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -32,9 +32,6 @@ export const Route = createFileRoute("/")({
     links: [{ rel: "canonical", href: "/" }],
   }),
 });
-
-const HERO_IMG =
-  "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=70";
 
 const STATS = [
   { icon: Award, value: 12, suffix: "+", label: "Years of Experience" },
@@ -59,56 +56,76 @@ const STEPS = [
 
 const BRANDS = ["Hikvision", "CP Plus", "Dell", "HP", "Lenovo", "Dahua", "Cisco", "TP-Link", "Epson", "Canon"];
 
-const TESTIMONIALS = [
-  { name: "Rajesh Kumar", role: "Owner, Prime Retail Mysore", text: "Wintech installed our full CCTV system and billing setup. Zero downtime in two years and their AMC response is genuinely same-day." },
-  { name: "Anitha S.", role: "HR Manager, Meridian Tech", text: "From biometrics to the office LAN, they delivered on time. Clean cabling, patient training — exactly what a growing office needs." },
-  { name: "Dr. Kiran M.", role: "Clinic Director", text: "They set up our servers, printers and CCTV. Professional team, honest pricing. I recommend them to every clinic in my network." },
+const TESTIMONIALS: Testimonial[] = [
+  {
+    name: "Rajesh Kumar",
+    role: "Owner, Prime Retail Mysore",
+    service: "CCTV & Billing",
+    text: "Wintech installed our full CCTV system and billing setup. Zero downtime in two years and their AMC response is genuinely same-day.",
+  },
+  {
+    name: "Anitha S.",
+    role: "HR Manager, Meridian Tech",
+    service: "Biometrics & Networking",
+    text: "From biometrics to the office LAN, they delivered on time. Clean cabling, patient training — exactly what a growing office needs.",
+  },
+  {
+    name: "Dr. Kiran M.",
+    role: "Clinic Director",
+    service: "Servers & Printers",
+    text: "They set up our servers, printers and CCTV. Professional team, honest pricing. I recommend them to every clinic in my network.",
+  },
+  {
+    name: "Fathima Noor",
+    role: "Manager, Silk Route Boutique",
+    service: "CCTV Installation",
+    text: "Our store had blind spots for years. Wintech mapped every corner and the footage quality at night is far better than our old system.",
+  },
+  {
+    name: "Suresh Gowda",
+    role: "Proprietor, Gowda Hardware",
+    service: "Billing Software",
+    text: "Switched our old manual billing to their software in a single weekend. Staff picked it up fast and GST reports are now painless.",
+  },
+  {
+    name: "Priya Ramesh",
+    role: "Principal, Sunrise Public School",
+    service: "Biometric Attendance",
+    text: "Biometric attendance across three floors, all synced to one dashboard. Support calls get answered, not just logged.",
+  },
+  {
+    name: "Manjunath B.",
+    role: "Facility Head, Vega Business Park",
+    service: "Electrical Works",
+    text: "Handled our panel upgrade and CCTV rewiring without a single day of disruption to tenants. Clear documentation after handover too.",
+  },
+  {
+    name: "Sneha Acharya",
+    role: "Founder, Acharya Diagnostics",
+    service: "IT Infrastructure",
+    text: "They planned our server room from scratch — racks, UPS, networking. Two years in, everything still runs exactly as specified.",
+  },
+  {
+    name: "Vikram Shetty",
+    role: "Director, Shetty Motors",
+    service: "AMC Support",
+    text: "What sold us was the AMC. One call and an engineer is on-site the same day, whether it's a printer or a full server issue.",
+  },
 ];
 
 function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="relative isolate min-h-[92vh] flex items-center overflow-hidden">
-        <div
-          className="absolute inset-0 -z-10 bg-cover bg-center bg-fixed"
-          style={{ backgroundImage: `url(${HERO_IMG})` }}
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/95 via-primary/85 to-primary-dark/90" />
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,rgba(255,107,53,0.25),transparent_40%)]" />
+      <HeroSlider />
 
-        <div className="container-x pt-32 pb-20 text-white">
+      {/* STATS STRIP */}
+      <section className="bg-primary py-10 text-white">
+        <div className="container-x">
           <Reveal>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold backdrop-blur-sm">
-              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
-              Serving Mysore since 2013 · Sales · Service · AMC
-            </div>
-          </Reveal>
-          <Reveal delay={120}>
-            <h1 className="mt-6 max-w-4xl font-display text-4xl font-extrabold leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl">
-              Complete IT, Security & <span className="text-accent">Electrical</span> solutions for your business.
-            </h1>
-          </Reveal>
-          <Reveal delay={220}>
-            <p className="mt-6 max-w-2xl text-base sm:text-lg text-white/85 leading-relaxed">
-              CCTV, computers, servers, biometrics, printers, billing software and electrical works —
-              installed, serviced and maintained by certified engineers you can trust.
-            </p>
-          </Reveal>
-          <Reveal delay={320}>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link to="/contact" className="btn-primary text-base !py-3.5 !px-7">
-                Get a Free Quote <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a href={`tel:${SITE.phone}`} className="btn-outline text-base !py-3.5 !px-7">
-                <Phone className="h-4 w-4" /> Call {SITE.phoneDisplay}
-              </a>
-            </div>
-          </Reveal>
-          <Reveal delay={420}>
-            <div className="mt-14 grid max-w-3xl grid-cols-2 gap-6 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
               {STATS.map((s) => (
-                <div key={s.label}>
+                <div key={s.label} className="text-center sm:text-left">
                   <div className="font-display text-3xl sm:text-4xl font-bold text-white">
                     <Counter to={s.value} suffix={s.suffix} />
                   </div>
@@ -221,34 +238,20 @@ function Home() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="section-pad">
+      <section className="section-pad bg-surface">
         <div className="container-x">
           <Reveal>
             <SectionHead
               eyebrow="Client Stories"
               title="What our customers say"
-              sub="Real feedback from businesses and homeowners across Mysore."
+              sub="Real feedback from businesses and homeowners across Mysore. Browse through, or let it play on its own."
             />
           </Reveal>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {TESTIMONIALS.map((t, i) => (
-              <Reveal key={t.name} delay={i * 100}>
-                <div className="h-full rounded-xl border border-border bg-card p-7 shadow-sm">
-                  <Quote className="h-8 w-8 text-accent/60" />
-                  <p className="mt-4 text-sm leading-relaxed text-foreground">"{t.text}"</p>
-                  <div className="mt-6 flex items-center gap-3 pt-4 border-t border-border">
-                    <div className="grid h-10 w-10 place-items-center rounded-full bg-primary text-primary-foreground font-semibold">
-                      {t.name.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold">{t.name}</div>
-                      <div className="text-xs text-muted-foreground">{t.role}</div>
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={100}>
+            <div className="mt-12 mx-auto max-w-3xl">
+              <TestimonialsCarousel items={TESTIMONIALS} />
+            </div>
+          </Reveal>
         </div>
       </section>
 

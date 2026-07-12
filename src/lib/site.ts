@@ -4,7 +4,7 @@ export const SITE = {
   tagline: "IT, Security & Electrical Solutions",
   description:
     "Wintech Enterprises — CCTV, computers, servers, networking, biometrics, printers, billing software and electrical works. Sales, service & AMC in Mysore.",
-  city: "Kalyangiri, Mysore",
+  city: "#763, MIG-1, Kalyangiri, Mysore, Karnataka 5770029",
   phone: "8050580506",
   phoneDisplay: "+91 80505 80506",
   whatsapp: "918050580506",

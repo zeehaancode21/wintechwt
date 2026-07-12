@@ -25,29 +25,28 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/85 backdrop-blur-lg shadow-sm border-b border-border"
-          : "bg-transparent"
-      }`}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled
+        ? "bg-white/85 backdrop-blur-lg shadow-sm border-b border-border"
+        : "bg-transparent"
+        }`}
     >
       <div className="container-x flex items-center justify-between gap-4 py-3 sm:py-4">
         <Link to="/" className="flex items-center gap-2 shrink-0" onClick={() => setOpen(false)}>
-          <div className="grid h-10 w-10 place-items-center rounded-md bg-primary text-primary-foreground font-display font-bold">
-            W
-          </div>
+          <img
+            src={`${import.meta.env.BASE_URL}logo.png`}
+            alt={SITE.shortName}
+            className="h-10 w-10 rounded-md object-contain"
+          />
           <div className="min-w-0">
             <div
-              className={`font-display font-bold leading-tight text-base sm:text-lg ${
-                scrolled ? "text-primary" : "text-white"
-              }`}
+              className={`font-display font-bold leading-tight text-base sm:text-lg ${scrolled ? "text-primary" : "text-white"
+                }`}
             >
               {SITE.shortName}
             </div>
             <div
-              className={`text-[10px] sm:text-[11px] uppercase tracking-wider leading-tight ${
-                scrolled ? "text-muted-foreground" : "text-white/80"
-              }`}
+              className={`text-[10px] sm:text-[11px] uppercase tracking-wider leading-tight ${scrolled ? "text-muted-foreground" : "text-white/80"
+                }`}
             >
               Enterprises
             </div>
@@ -60,15 +59,13 @@ export function Header() {
               key={n.to}
               to={n.to}
               activeOptions={{ exact: n.to === "/" }}
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                scrolled
-                  ? "text-foreground hover:text-accent hover:bg-secondary"
-                  : "text-white/90 hover:text-white hover:bg-white/10"
-              }`}
+              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${scrolled
+                ? "text-foreground hover:text-accent hover:bg-secondary"
+                : "text-white/90 hover:text-white hover:bg-white/10"
+                }`}
               activeProps={{
-                className: `px-3 py-2 text-sm font-semibold rounded-md ${
-                  scrolled ? "text-accent bg-secondary" : "text-white bg-white/15"
-                }`,
+                className: `px-3 py-2 text-sm font-semibold rounded-md ${scrolled ? "text-accent bg-secondary" : "text-white bg-white/15"
+                  }`,
               }}
             >
               {n.label}
@@ -79,9 +76,8 @@ export function Header() {
         <div className="flex items-center gap-2">
           <a
             href={`tel:${SITE.phone}`}
-            className={`hidden md:inline-flex items-center gap-2 text-sm font-semibold ${
-              scrolled ? "text-primary" : "text-white"
-            }`}
+            className={`hidden md:inline-flex items-center gap-2 text-sm font-semibold ${scrolled ? "text-primary" : "text-white"
+              }`}
           >
             <Phone className="h-4 w-4" />
             {SITE.phoneDisplay}
@@ -92,9 +88,8 @@ export function Header() {
           <button
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
-            className={`lg:hidden grid h-10 w-10 place-items-center rounded-md ${
-              scrolled ? "text-primary bg-secondary" : "text-white bg-white/15"
-            }`}
+            className={`lg:hidden grid h-10 w-10 place-items-center rounded-md ${scrolled ? "text-primary bg-secondary" : "text-white bg-white/15"
+              }`}
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
