@@ -8,7 +8,7 @@ export default defineConfig({
   // This repo is "wintech", so GitHub Pages serves it at
   // https://zeehaancode21.github.io/wintech/ — NOT the domain root.
   // base must match the repo name exactly (with leading and trailing slash).
-  base: "/wintech/",
+  base: "/wintechwt/",
   plugins: [
     tanstackRouter({
       target: "react",
