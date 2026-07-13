@@ -1065,9 +1065,13 @@ const LearnMoreButton = ({ children, className = "" }: { children: React.ReactNo
   );
 };
 
-// Certificate Popup Component
 // Certificate Popup Component - FIXED VERSION
 const CertificatePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  // Prevent click propagation from the popup content to the backdrop
+  const handlePopupClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -1088,6 +1092,7 @@ const CertificatePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            onClick={handlePopupClick}
           >
             <motion.div
               className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl"
@@ -1099,6 +1104,7 @@ const CertificatePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
                 background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%)",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
               }}
+              onClick={(e) => e.stopPropagation()}
             >
               {/* Animated gradient border */}
               <motion.div
@@ -1123,116 +1129,8 @@ const CertificatePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
               <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-accent/20 blur-3xl animate-pulse" />
               <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-blue-500/20 blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
               
-              {/* Close Button */}
-              <motion.button
-                onClick={onClose}
-                className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2.5 text-white/80 hover:bg-white/20 hover:text-white transition-all backdrop-blur-sm border border-white/10"
-                whileHover={{ rotate: 90, scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <X className="h-6 w-6" />
-              </motion.button>
-
               {/* Content */}
               <div className="p-6 sm:p-8 lg:p-10 relative z-10">
-                {/* Header with animation */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <motion.div
-                    className="flex items-center gap-3 mb-4"
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.2, type: "spring" }}
-                  >
-                    <div className="rounded-xl bg-gradient-to-br from-accent to-primary p-2.5">
-                      <BadgeCheck className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">
-                        Our Promise to You
-                      </h2>
-                      <p className="text-sm text-accent/80 mt-1">
-                        Transparent, honest, and reliable
-                      </p>
-                    </div>
-                  </motion.div>
-                </motion.div>
-
-                {/* Main Text Content - NOW VISIBLE with white text on dark background */}
-                <motion.div
-                  className="mt-6 space-y-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                  <motion.p
-                    className="text-lg sm:text-xl text-white/90 leading-relaxed font-medium"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                  >
-                    No sales tricks. No surprise add-ons. No "We'll call you back" that turns into next year. 
-                    <span className="text-accent font-semibold"> Just a free site visit</span> and a clear, no-obligation quote.
-                  </motion.p>
-
-                  <motion.div
-                    className="p-5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    whileHover={{ 
-                      scale: 1.02,
-                      borderColor: "rgba(255, 107, 53, 0.5)",
-                      boxShadow: "0 10px 30px -10px rgba(255, 107, 53, 0.3)"
-                    }}
-                  >
-                    <div className="flex items-start gap-3">
-                      <motion.div
-                        className="mt-1 rounded-full bg-accent/20 p-1.5"
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <CheckCircle className="h-5 w-5 text-accent" />
-                      </motion.div>
-                      <p className="text-base sm:text-lg text-white/85 leading-relaxed">
-                        We'll assess your site, understand your needs, and give you a transparent quote. 
-                        <span className="text-white font-semibold"> No pressure, no hidden costs</span>, 
-                        and no mysterious "consultation fees" that appear out of nowhere.
-                      </p>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    className="p-5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    whileHover={{ 
-                      scale: 1.02,
-                      borderColor: "rgba(255, 107, 53, 0.5)",
-                      boxShadow: "0 10px 30px -10px rgba(255, 107, 53, 0.3)"
-                    }}
-                  >
-                    <div className="flex items-start gap-3">
-                      <motion.div
-                        className="mt-1 rounded-full bg-blue-500/20 p-1.5"
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <Wrench className="h-5 w-5 text-blue-400" />
-                      </motion.div>
-                      <p className="text-base sm:text-lg text-white/85 leading-relaxed">
-                        Our engineer will inspect your site and recommend the right solution. 
-                        <span className="text-accent font-semibold"> We promise an honest quote</span> — 
-                        because guessing is for game shows, not business.
-                      </p>
-                    </div>
-                  </motion.div>
-                </motion.div>
-
                 {/* Certificate Image */}
                 <motion.div
                   className="mt-8"
@@ -1286,18 +1184,25 @@ const CertificatePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
                     href={`https://wa.me/${SITE.whatsapp}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex-1 min-w-[140px] rounded-xl border-2 border-white/20 #1e1b4b/5 px-6 py-3 text-center text-base font-semibold text-white transition-all hover:border-accent hover:bg-accent/10"
+                    className="flex-1 min-w-[140px] rounded-xl border-2 border-white/20 px-6 py-3 text-center text-base font-semibold text-white transition-all hover:border-accent hover:bg-accent/10"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <MessageSquare className="mr-2 inline h-5 w-5" />
                     WhatsApp
                   </motion.a>
+                  
+                  {/* CLOSE BUTTON - Fixed */}
                   <motion.button
-                    onClick={onClose}
-                    className="flex-1 min-w-[140px] rounded-xl border border-white/10 #1e1b4b/5 px-6 py-3 text-center text-base font-semibold text-white/80 transition-all hover:bg-white/10 hover:text-white"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      onClose();
+                    }}
+                    className="flex-1 min-w-[140px] rounded-xl border border-white/10 px-6 py-3 text-center text-base font-semibold text-white/80 transition-all hover:bg-white/10 hover:text-white"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    type="button"
                   >
                     Close
                   </motion.button>
