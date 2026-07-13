@@ -124,3 +124,31 @@
   to { opacity: 1; transform: translateY(0); }
 }
 .reveal { animation: reveal-up 0.7s ease-out both; }
+
+@keyframes blob-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  50% { transform: translate(-20px, 20px) scale(1.15); opacity: 0.5; }
+}
+
+@keyframes blob-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+  50% { transform: translate(20px, -15px) scale(1.1); opacity: 0.45; }
+}
+
+@keyframes card-glow-pulse {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.3; }
+}
+
+.animate-blob-1 {
+  animation: blob-float-1 8s ease-in-out infinite;
+}
+
+.animate-blob-2 {
+  animation: blob-float-2 9s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+.animate-card-glow {
+  animation: card-glow-pulse 6s ease-in-out infinite;
+}

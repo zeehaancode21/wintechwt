@@ -77,7 +77,7 @@ const STEPS = [
   { n: "04", title: "Support & AMC", desc: "Ongoing maintenance, quick fixes, and yearly contracts." },
 ];
 
-const BRANDS = ["Hikvision", "CP Plus", "Dell", "HP", "Lenovo", "Dahua", "Cisco", "TP-Link", "Epson", "Canon"];
+const BRANDS = ["Hikvision", "CP Plus", "HP", "Lenovo", "Dahua", "Cisco", "TP-Link", "Epson", "Canon"];
 
 const TESTIMONIALS: Testimonial[] = [
   {
@@ -344,9 +344,9 @@ const AnimatedLogo = () => {
 };
 
 // Enhanced Testimonial Popup Component (No Avatar, No Role)
-const TestimonialPopup = ({ testimonial, isOpen, onClose }: { 
-  testimonial: Testimonial | null; 
-  isOpen: boolean; 
+const TestimonialPopup = ({ testimonial, isOpen, onClose }: {
+  testimonial: Testimonial | null;
+  isOpen: boolean;
   onClose: () => void;
 }) => {
   if (!testimonial) return null;
@@ -428,7 +428,7 @@ const TestimonialPopup = ({ testimonial, isOpen, onClose }: {
                   >
                     {testimonial.name}
                   </motion.h3>
-                  
+
                   <motion.div
                     className="flex flex-wrap items-center gap-3 mt-2"
                     initial={{ opacity: 0, x: -10 }}
@@ -536,8 +536,8 @@ const TestimonialPopup = ({ testimonial, isOpen, onClose }: {
 };
 
 // Clickable Testimonial Tile Component (No Avatar, No Role)
-const ClickableTestimonialTile = ({ testimonial, onClick }: { 
-  testimonial: Testimonial; 
+const ClickableTestimonialTile = ({ testimonial, onClick }: {
+  testimonial: Testimonial;
   onClick: () => void;
 }) => {
   return (
@@ -550,7 +550,7 @@ const ClickableTestimonialTile = ({ testimonial, onClick }: {
     >
       <div className="relative overflow-hidden rounded-xl border border-border bg-card p-6 transition-all hover:border-accent hover:shadow-xl hover:shadow-accent/20">
         <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
+
         <div className="relative">
           {/* Header with name and quote icon */}
           <div className="flex items-start justify-between gap-3 mb-3">
@@ -570,19 +570,19 @@ const ClickableTestimonialTile = ({ testimonial, onClick }: {
               <Quote className="h-4 w-4" />
             </motion.div>
           </div>
-          
+
           {/* Testimonial preview */}
           <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
             "{testimonial.text}"
           </p>
-          
+
           {/* Rating */}
           <div className="flex items-center gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
               <Star key={star} className="h-3.5 w-3.5 fill-accent text-accent" />
             ))}
           </div>
-          
+
           {/* Click indicator */}
           <motion.div
             className="absolute bottom-3 right-3 rounded-full bg-accent/10 p-1.5 text-accent opacity-0 group-hover:opacity-100 transition-opacity"
@@ -616,12 +616,12 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
 
   useEffect(() => {
     if (!isAutoPlaying) return;
-    
+
     const startTime = Date.now();
     const timer = setInterval(() => {
       const elapsed = Date.now() - startTime;
       const newProgress = (elapsed / CAROUSEL_INTERVAL) * 100;
-      
+
       if (newProgress >= 100) {
         setProgress(100);
         nextSlide();
@@ -642,7 +642,7 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
         <div className="absolute top-4 right-4 text-accent/20">
           <Quote className="h-12 w-12" />
         </div>
-        
+
         <div className="relative">
           {/* Rating - Fixed position above text */}
           <div className="flex items-center gap-1 mb-4">
@@ -650,12 +650,12 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
               <Star key={star} className="h-4 w-4 fill-accent text-accent" />
             ))}
           </div>
-          
+
           {/* Testimonial Text */}
           <p className="text-base sm:text-lg leading-relaxed text-foreground/90 mb-4">
             "{currentItem.text}"
           </p>
-          
+
           {/* Client Info */}
           <div className="flex items-center justify-between">
             <div>
@@ -679,7 +679,7 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
             {isAutoPlaying ? 'Pause' : 'Play'}
           </button>
         </div>
-        
+
         {/* Progress Bar */}
         <div className="h-1 w-full rounded-full bg-accent/10 overflow-hidden">
           <motion.div
@@ -701,7 +701,7 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
         >
           <ChevronLeft className="h-5 w-5" />
         </motion.button>
-        
+
         {/* Dots */}
         <div className="flex items-center gap-2">
           {items.map((_, index) => (
@@ -711,14 +711,13 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
                 setCurrentIndex(index);
                 setProgress(0);
               }}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === currentIndex ? 'w-8 bg-accent' : 'w-2 bg-accent/30 hover:bg-accent/50'
-              }`}
+              className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex ? 'w-8 bg-accent' : 'w-2 bg-accent/30 hover:bg-accent/50'
+                }`}
               aria-label={`Go to testimonial ${index + 1}`}
             />
           ))}
         </div>
-        
+
         <motion.button
           onClick={nextSlide}
           className="rounded-full bg-accent/10 p-3 text-accent hover:bg-accent/20 transition-colors"
@@ -729,7 +728,7 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
           <ChevronRight className="h-5 w-5" />
         </motion.button>
       </div>
-      
+
       {/* Counter Info */}
       <div className="text-center mt-3">
         <span className="text-xs text-muted-foreground">
@@ -740,7 +739,6 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
   );
 };
 
-// Learn More Popup Component
 const LearnMorePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const features = [
     { icon: Camera, title: "CCTV Surveillance", desc: "HD cameras with night vision and remote access", color: "from-blue-500 to-cyan-400" },
@@ -770,7 +768,7 @@ const LearnMorePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
           >
             <motion.div
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl bg-gradient-to-br from-surface via-card to-surface shadow-2xl"
+              className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-gradient-to-br from-surface via-card to-surface shadow-2xl"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -779,39 +777,41 @@ const LearnMorePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
               <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-accent via-primary to-accent bg-[length:200%_200%] animate-gradient-shift" />
               <motion.button
                 onClick={onClose}
-                className="absolute right-4 top-4 z-10 rounded-full bg-black/10 p-2 text-foreground/60 hover:bg-black/20 hover:text-foreground transition-colors"
+                className="absolute right-3 top-3 z-10 rounded-full bg-black/10 p-2 text-foreground/60 hover:bg-black/20 hover:text-foreground transition-colors"
                 whileHover={{ rotate: 90, scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </motion.button>
-              <div className="p-6 sm:p-8 lg:p-10">
+              
+              <div className="p-5 sm:p-6 lg:p-7">
                 <motion.div
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center gap-2 mb-2">
                     <motion.div
-                      className="rounded-full bg-accent/10 p-2"
+                      className="rounded-full bg-accent/10 p-1.5"
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}
                     >
-                      <Sparkles className="h-6 w-6 text-accent" />
+                      <Sparkles className="h-4 w-4 text-accent" />
                     </motion.div>
-                    <span className="text-sm font-semibold uppercase tracking-wider text-accent">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-accent">
                       Why Choose Us
                     </span>
                   </div>
-                  <h2 className="font-display text-3xl sm:text-4xl font-bold text-primary">
+                  <h2 className="font-display text-xl sm:text-2xl font-bold text-primary">
                     Your Complete Technology Partner
                   </h2>
-                  <p className="mt-2 text-muted-foreground">
-                    We deliver end-to-end solutions with guaranteed quality and support.
+                  <p className="mt-1.5 text-sm text-muted-foreground">
+                    End-to-end solutions with guaranteed quality and support.
                   </p>
                 </motion.div>
+                
                 <motion.div
-                  className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                  className="mt-5 grid gap-3 sm:grid-cols-2"
                   initial="hidden"
                   animate="visible"
                   variants={{
@@ -819,7 +819,7 @@ const LearnMorePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                     visible: {
                       opacity: 1,
                       transition: {
-                        staggerChildren: 0.1,
+                        staggerChildren: 0.08,
                       },
                     },
                   }}
@@ -830,96 +830,98 @@ const LearnMorePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                       <motion.div
                         key={index}
                         variants={{
-                          hidden: { opacity: 0, y: 20, scale: 0.9 },
+                          hidden: { opacity: 0, y: 15, scale: 0.95 },
                           visible: { opacity: 1, y: 0, scale: 1 },
                         }}
                         whileHover={{
-                          scale: 1.05,
-                          boxShadow: "0 20px 40px -12px rgba(255,107,53,0.3)",
+                          scale: 1.03,
+                          boxShadow: "0 10px 20px -10px rgba(255,107,53,0.25)",
                           borderColor: "#FF6B35",
                         }}
-                        className="group rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:shadow-xl"
+                        className="group rounded-lg border border-border bg-card p-4 transition-all duration-300 hover:shadow-lg"
                       >
                         <motion.div
-                          className={`grid h-12 w-12 place-items-center rounded-lg bg-gradient-to-br ${feature.color} text-white shadow-lg`}
+                          className={`grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br ${feature.color} text-white shadow-md`}
                           whileHover={{ rotate: 360, scale: 1.1 }}
-                          transition={{ duration: 0.6 }}
+                          transition={{ duration: 0.5 }}
                         >
-                          <Icon className="h-6 w-6" />
+                          <Icon className="h-5 w-5" />
                         </motion.div>
-                        <h3 className="mt-3 font-semibold text-foreground group-hover:text-accent transition-colors">
+                        <h3 className="mt-2 text-sm font-semibold text-foreground group-hover:text-accent transition-colors">
                           {feature.title}
                         </h3>
-                        <p className="mt-1 text-sm text-muted-foreground">
+                        <p className="mt-0.5 text-xs text-muted-foreground">
                           {feature.desc}
                         </p>
                       </motion.div>
                     );
                   })}
                 </motion.div>
+                
                 <motion.div
-                  className="mt-8 grid gap-4 sm:grid-cols-3"
-                  initial={{ opacity: 0, y: 20 }}
+                  className="mt-5 grid gap-2 sm:grid-cols-3"
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
+                  transition={{ delay: 0.5 }}
                 >
                   {[
-                    { label: "Projects Completed", value: "2500+", icon: CheckCircle, color: "from-blue-500 to-cyan-400" },
-                    { label: "Happy Clients", value: "800+", icon: Users, color: "from-green-500 to-emerald-400" },
-                    { label: "Years Experience", value: "12+", icon: Award, color: "from-yellow-500 to-orange-400" },
+                    { label: "Projects", value: "2500+", icon: CheckCircle, color: "from-blue-500 to-cyan-400" },
+                    { label: "Clients", value: "800+", icon: Users, color: "from-green-500 to-emerald-400" },
+                    { label: "Experience", value: "12+", icon: Award, color: "from-yellow-500 to-orange-400" },
                   ].map((stat, index) => {
                     const Icon = stat.icon;
                     return (
                       <motion.div
                         key={index}
-                        className="rounded-lg bg-primary/5 p-4 text-center hover:bg-primary/10 transition-colors"
+                        className="rounded-lg bg-primary/5 p-3 text-center hover:bg-primary/10 transition-colors"
                         whileHover={{ scale: 1.05 }}
                       >
                         <motion.div
-                          className={`mx-auto grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br ${stat.color} text-white shadow-lg`}
+                          className={`mx-auto grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br ${stat.color} text-white shadow-md`}
                           whileHover={{ rotate: 360 }}
-                          transition={{ duration: 0.6 }}
+                          transition={{ duration: 0.5 }}
                         >
-                          <Icon className="h-5 w-5" />
+                          <Icon className="h-4 w-4" />
                         </motion.div>
-                        <p className="mt-2 font-display text-xl font-bold text-primary">
+                        <p className="mt-1 font-display text-lg font-bold text-primary">
                           {stat.value}
                         </p>
-                        <p className="text-xs text-muted-foreground">{stat.label}</p>
+                        <p className="text-[10px] text-muted-foreground">{stat.label}</p>
                       </motion.div>
                     );
                   })}
                 </motion.div>
+                
                 <motion.div
-                  className="mt-8 flex flex-wrap gap-4"
-                  initial={{ opacity: 0, y: 20 }}
+                  className="mt-5 flex flex-wrap gap-2"
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
+                  transition={{ delay: 0.6 }}
                 >
                   <motion.a
                     href={`tel:${SITE.phone}`}
-                    className="flex-1 min-w-[140px] rounded-xl bg-gradient-to-r from-accent to-primary px-6 py-3 text-center font-semibold text-white shadow-lg hover:shadow-xl transition-all"
-                    whileHover={{ scale: 1.05, boxShadow: "0 10px 30px -10px rgba(255,107,53,0.5)" }}
+                    className="flex-1 min-w-[100px] rounded-lg bg-gradient-to-r from-accent to-primary px-4 py-2 text-center text-sm font-semibold text-white shadow-md hover:shadow-lg transition-all"
+                    whileHover={{ scale: 1.04, boxShadow: "0 8px 20px -8px rgba(255,107,53,0.5)" }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Phone className="mr-2 inline h-4 w-4" />
+                    <Phone className="mr-1.5 inline h-3.5 w-3.5" />
                     Call Now
                   </motion.a>
                   <motion.a
                     href={`https://wa.me/${SITE.whatsapp}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex-1 min-w-[140px] rounded-xl border-2 border-accent/30 bg-transparent px-6 py-3 text-center font-semibold text-foreground transition-all hover:border-accent hover:bg-accent/5"
-                    whileHover={{ scale: 1.05 }}
+                    className="flex-1 min-w-[100px] rounded-lg border border-accent/30 bg-transparent px-4 py-2 text-center text-sm font-semibold text-foreground transition-all hover:border-accent hover:bg-accent/5"
+                    whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <MessageSquare className="mr-2 inline h-4 w-4" />
+                    <MessageSquare className="mr-1.5 inline h-3.5 w-3.5" />
                     WhatsApp
                   </motion.a>
                   <motion.button
                     onClick={onClose}
-                    className="flex-1 min-w-[140px] rounded-xl border border-border bg-card px-6 py-3 text-center font-semibold text-muted-foreground transition-all hover:bg-surface hover:text-foreground"
-                    whileHover={{ scale: 1.05 }}
+                    className="flex-1 min-w-[100px] rounded-lg border border-border bg-card px-4 py-2 text-center text-sm font-semibold text-muted-foreground transition-all hover:bg-surface hover:text-foreground"
+                    whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     Close
@@ -971,7 +973,7 @@ const LearnMoreButton = ({ children, className = "" }: { children: React.ReactNo
         <motion.div
           className="absolute inset-0 rounded-xl"
           animate={{
-            boxShadow: isHovered 
+            boxShadow: isHovered
               ? ["0 0 20px rgba(255,107,53,0.5)", "0 0 40px rgba(255,107,53,0.8)", "0 0 20px rgba(255,107,53,0.5)"]
               : ["0 0 10px rgba(255,107,53,0.3)", "0 0 20px rgba(255,107,53,0.5)", "0 0 10px rgba(255,107,53,0.3)"],
           }}
@@ -1017,7 +1019,7 @@ const LearnMoreButton = ({ children, className = "" }: { children: React.ReactNo
           </motion.div>
           {children}
           <motion.span
-            animate={{ 
+            animate={{
               x: isHovered ? [0, 8, 0] : [0, 5, 0],
               scale: isHovered ? [1, 1.2, 1] : 1,
             }}
@@ -1063,9 +1065,256 @@ const LearnMoreButton = ({ children, className = "" }: { children: React.ReactNo
   );
 };
 
+// Certificate Popup Component
+// Certificate Popup Component - FIXED VERSION
+const CertificatePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+          
+          {/* Popup Container */}
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+          >
+            <motion.div
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ delay: 0.1 }}
+              style={{
+                background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+              }}
+            >
+              {/* Animated gradient border */}
+              <motion.div
+                className="absolute inset-0 rounded-2xl opacity-50"
+                style={{
+                  background: "linear-gradient(45deg, #FF6B35, #FF4500, #FF6B35, #FF8C00)",
+                  backgroundSize: "400% 400%",
+                  filter: "blur(2px)",
+                  zIndex: -1,
+                }}
+                animate={{
+                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+              
+              {/* Glowing orb decoration */}
+              <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-accent/20 blur-3xl animate-pulse" />
+              <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-blue-500/20 blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+              
+              {/* Close Button */}
+              <motion.button
+                onClick={onClose}
+                className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2.5 text-white/80 hover:bg-white/20 hover:text-white transition-all backdrop-blur-sm border border-white/10"
+                whileHover={{ rotate: 90, scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <X className="h-6 w-6" />
+              </motion.button>
+
+              {/* Content */}
+              <div className="p-6 sm:p-8 lg:p-10 relative z-10">
+                {/* Header with animation */}
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <motion.div
+                    className="flex items-center gap-3 mb-4"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2, type: "spring" }}
+                  >
+                    <div className="rounded-xl bg-gradient-to-br from-accent to-primary p-2.5">
+                      <BadgeCheck className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">
+                        Our Promise to You
+                      </h2>
+                      <p className="text-sm text-accent/80 mt-1">
+                        Transparent, honest, and reliable
+                      </p>
+                    </div>
+                  </motion.div>
+                </motion.div>
+
+                {/* Main Text Content - NOW VISIBLE with white text on dark background */}
+                <motion.div
+                  className="mt-6 space-y-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  <motion.p
+                    className="text-lg sm:text-xl text-white/90 leading-relaxed font-medium"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                  >
+                    No sales tricks. No surprise add-ons. No "We'll call you back" that turns into next year. 
+                    <span className="text-accent font-semibold"> Just a free site visit</span> and a clear, no-obligation quote.
+                  </motion.p>
+
+                  <motion.div
+                    className="p-5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    whileHover={{ 
+                      scale: 1.02,
+                      borderColor: "rgba(255, 107, 53, 0.5)",
+                      boxShadow: "0 10px 30px -10px rgba(255, 107, 53, 0.3)"
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <motion.div
+                        className="mt-1 rounded-full bg-accent/20 p-1.5"
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        <CheckCircle className="h-5 w-5 text-accent" />
+                      </motion.div>
+                      <p className="text-base sm:text-lg text-white/85 leading-relaxed">
+                        We'll assess your site, understand your needs, and give you a transparent quote. 
+                        <span className="text-white font-semibold"> No pressure, no hidden costs</span>, 
+                        and no mysterious "consultation fees" that appear out of nowhere.
+                      </p>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    className="p-5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    whileHover={{ 
+                      scale: 1.02,
+                      borderColor: "rgba(255, 107, 53, 0.5)",
+                      boxShadow: "0 10px 30px -10px rgba(255, 107, 53, 0.3)"
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <motion.div
+                        className="mt-1 rounded-full bg-blue-500/20 p-1.5"
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        <Wrench className="h-5 w-5 text-blue-400" />
+                      </motion.div>
+                      <p className="text-base sm:text-lg text-white/85 leading-relaxed">
+                        Our engineer will inspect your site and recommend the right solution. 
+                        <span className="text-accent font-semibold"> We promise an honest quote</span> — 
+                        because guessing is for game shows, not business.
+                      </p>
+                    </div>
+                  </motion.div>
+                </motion.div>
+
+                {/* Certificate Image */}
+                <motion.div
+                  className="mt-8"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.6 }}
+                >
+                  <motion.div
+                    className="relative rounded-xl overflow-hidden border border-white/10 shadow-2xl"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                    />
+                    <img
+                      src={`${import.meta.env.BASE_URL}dell.png`}
+                      alt="Dell Certificate"
+                      className="w-full h-auto rounded-lg"
+                    />
+                  </motion.div>
+                  <motion.p
+                    className="mt-3 text-center text-sm text-white/60"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.8 }}
+                  >
+                    Authorized Dell Partner Certificate
+                  </motion.p>
+                </motion.div>
+
+                {/* Call to Action Buttons */}
+                <motion.div
+                  className="mt-8 flex flex-wrap gap-3 justify-center sm:justify-start"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.7 }}
+                >
+                  <motion.a
+                    href={`tel:${SITE.phone}`}
+                    className="flex-1 min-w-[140px] rounded-xl bg-gradient-to-r from-accent to-primary px-6 py-3 text-center text-base font-semibold text-white shadow-lg transition-all"
+                    whileHover={{ scale: 1.05, boxShadow: "0 15px 30px -10px rgba(255,107,53,0.5)" }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Phone className="mr-2 inline h-5 w-5" />
+                    Call Now
+                  </motion.a>
+                  <motion.a
+                    href={`https://wa.me/${SITE.whatsapp}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 min-w-[140px] rounded-xl border-2 border-white/20 #1e1b4b/5 px-6 py-3 text-center text-base font-semibold text-white transition-all hover:border-accent hover:bg-accent/10"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <MessageSquare className="mr-2 inline h-5 w-5" />
+                    WhatsApp
+                  </motion.a>
+                  <motion.button
+                    onClick={onClose}
+                    className="flex-1 min-w-[140px] rounded-xl border border-white/10 #1e1b4b/5 px-6 py-3 text-center text-base font-semibold text-white/80 transition-all hover:bg-white/10 hover:text-white"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Close
+                  </motion.button>
+                </motion.div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
+
 function Home() {
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
   const [isTestimonialPopupOpen, setIsTestimonialPopupOpen] = useState(false);
+  const [isCertificateOpen, setIsCertificateOpen] = useState(false);
 
   const handleTestimonialClick = (testimonial: Testimonial) => {
     setSelectedTestimonial(testimonial);
@@ -1075,6 +1324,14 @@ function Home() {
   const handleCloseTestimonialPopup = () => {
     setIsTestimonialPopupOpen(false);
     setTimeout(() => setSelectedTestimonial(null), 300);
+  };
+
+  const handleCertificateClick = () => {
+    setIsCertificateOpen(true);
+  };
+
+  const handleCloseCertificate = () => {
+    setIsCertificateOpen(false);
   };
 
   return (
@@ -1088,7 +1345,7 @@ function Home() {
         <FloatingParticles />
         <div className="container-x relative">
           <Reveal>
-            <motion.div 
+            <motion.div
               className="grid grid-cols-2 gap-6 sm:grid-cols-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -1124,7 +1381,7 @@ function Home() {
             <SectionHead
               eyebrow="Our Services"
               title="One partner for every business system"
-              sub="From surveillance to servers, biometrics to billing — we sell, install, service and maintain it all."
+              sub="From CCTV and servers to biometrics and billing solutions, we deliver end-to-end business technology. Supply, installation, support, and maintenance—all handled by one trusted partner."
             />
           </Reveal>
           <div className="mt-12">
@@ -1142,7 +1399,7 @@ function Home() {
               <div className="mb-6">
                 <AnimatedLogo />
               </div>
-              <motion.span 
+              <motion.span
                 className="inline-block text-sm font-semibold uppercase tracking-wider text-accent"
                 whileHover={{ scale: 1.05 }}
               >
@@ -1177,7 +1434,7 @@ function Home() {
                     transition={{ type: "spring", stiffness: 400 }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <motion.div 
+                    <motion.div
                       className="grid h-11 w-11 place-items-center rounded-lg bg-accent/10 text-accent relative"
                       whileHover={{ rotate: 360, transition: { duration: 0.6 } }}
                     >
@@ -1211,17 +1468,17 @@ function Home() {
             <div className="hidden md:block absolute top-8 left-[12%] right-[12%] h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             {STEPS.map((s, i) => (
               <Reveal key={s.n} delay={i * 100}>
-                <motion.div 
+                <motion.div
                   className="relative text-center md:text-left group"
                   whileHover={{ y: -5 }}
                 >
-                  <motion.div 
+                  <motion.div
                     className="mx-auto md:mx-0 grid h-16 w-16 place-items-center rounded-full bg-accent text-accent-foreground font-display text-lg font-bold ring-8 ring-primary relative"
                     whileHover={{ scale: 1.1, rotate: 360 }}
                     transition={{ duration: 0.6 }}
                   >
                     {s.n}
-                    <motion.div 
+                    <motion.div
                       className="absolute inset-0 rounded-full bg-accent/30"
                       initial={{ scale: 0 }}
                       animate={{ scale: [0, 1.5, 1] }}
@@ -1244,24 +1501,48 @@ function Home() {
             Authorized partners & brands we work with
           </p>
           <div className="mt-6 relative">
-            <motion.div 
+            <motion.div
               className="flex items-center justify-center gap-x-10 gap-y-4 flex-wrap"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
             >
+              {/* Dell as clickable text that shows certificate */}
+              <motion.div
+                className="flex items-center cursor-pointer"
+                whileHover={{
+                  scale: 1.2,
+                  color: "#FF6B35",
+                  transition: { type: "spring", stiffness: 300 }
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0 * 0.05 }}
+                onClick={handleCertificateClick}
+              >
+                <span className="text-lg sm:text-xl font-display font-bold text-muted-foreground/70 hover:text-primary transition-colors">
+                  Dell
+                </span>
+                <motion.div
+                  className="ml-2 text-xs text-accent/60 hover:text-accent transition-colors"
+                  whileHover={{ scale: 1.2 }}
+                >
+                  <BadgeCheck className="h-4 w-4" />
+                </motion.div>
+              </motion.div>
+
               {BRANDS.map((b, index) => (
                 <motion.span
                   key={b}
                   className="text-lg sm:text-xl font-display font-bold text-muted-foreground/70 hover:text-primary transition-colors cursor-pointer"
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.2,
                     color: "#FF6B35",
                     transition: { type: "spring", stiffness: 300 }
                   }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
+                  transition={{ delay: (index + 1) * 0.05 }}
                 >
                   {b}
                 </motion.span>
@@ -1282,7 +1563,7 @@ function Home() {
               sub="Click on any testimonial to read the full story in detail."
             />
           </Reveal>
-          
+
           {/* Clickable Testimonial Grid */}
           <Reveal delay={100}>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -1315,78 +1596,96 @@ function Home() {
         onClose={handleCloseTestimonialPopup}
       />
 
-      {/* CTA */}
-      <section className="pb-20">
-        <div className="container-x">
-          <motion.div 
-            className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-dark to-primary p-8 sm:p-12 lg:p-16 text-white"
-            whileHover={{ scale: 1.01 }}
-            transition={{ type: "spring", stiffness: 300 }}
+      {/* Certificate Popup */}
+      <CertificatePopup
+        isOpen={isCertificateOpen}
+        onClose={handleCloseCertificate}
+      />
+{/* CTA */}
+<section className="pb-32">
+  <div className="container-x">
+    <motion.div
+      className="relative overflow-hidden rounded-2xl bg-gradient-primary p-6 sm:p-8 lg:p-10 text-white"
+      whileHover={{ scale: 1.01 }}
+      transition={{ type: "spring", stiffness: 300 }}
+    >
+      <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent/30 blur-3xl animate-blob-1" />
+      <div className="absolute -left-16 bottom-0 h-56 w-56 rounded-full bg-cyan/25 blur-3xl animate-blob-2" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,53,0.1),transparent_70%)] animate-card-glow" />
+      {/* Dark scrim so text stays readable over the glow/blobs */}
+      <div className="absolute inset-0 bg-black/25" />
+      <FloatingParticles />
+
+      <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div>
+          <motion.h2
+            className="font-display text-3xl sm:text-4xl font-bold text-white drop-shadow-md"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
           >
-            <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent/30 blur-3xl animate-pulse" />
-            <div className="absolute -left-16 bottom-0 h-56 w-56 rounded-full bg-cyan/25 blur-3xl animate-pulse delay-1000" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,53,0.1),transparent_70%)]" />
-            <FloatingParticles />
-            <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-              <div>
-                <motion.h2 
-                  className="font-display text-3xl sm:text-4xl font-bold"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  Ready for reliable, all-in-one IT support?
-                </motion.h2>
-                <motion.p 
-                  className="mt-3 text-white/85 max-w-xl"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
-                >
-                  Book a free site visit today. Our engineer will assess your needs and
-                  give you a transparent quote — no obligation.
-                </motion.p>
-                <motion.div 
-                  className="mt-3 flex items-center gap-2 text-sm text-white/75"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                  <MapPin className="h-4 w-4 text-accent" />
-                  {SITE.city}
-                </motion.div>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <motion.a
-                  href={`tel:${SITE.phone}`}
-                  className="btn-primary text-base !py-3.5 !px-7 relative overflow-hidden group"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    <Phone className="h-4 w-4" /> Call Now
-                  </span>
-                  <motion.span 
-                    className="absolute inset-0 bg-accent"
-                    initial={{ x: "-100%" }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.a>
-                <motion.a
-                  href={`https://wa.me/${SITE.whatsapp}`}
-                  target="_blank" rel="noreferrer"
-                  className="btn-outline text-base !py-3.5 !px-7 border-white/30 hover:bg-white/10"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <MessageSquare className="h-4 w-4" /> WhatsApp
-                </motion.a>
-              </div>
-            </div>
+            Ready for reliable, all-in-one IT support?
+          </motion.h2>
+
+          <motion.div
+            className="mt-3 text-white max-w-xl space-y-3 font-medium [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <p>
+              No sales tricks. No surprise add-ons. No "We'll call you back" that turns into next year. Just a free site visit and a clear, no-obligation quote.
+            </p>
+            <p>
+              We'll assess your site, understand your needs, and give you a transparent quote. No pressure, no hidden costs, and no mysterious "consultation fees" that appear out of nowhere.
+            </p>
+            <p>
+              Our engineer will inspect your site and recommend the right solution. We promise an honest quote—because guessing is for game shows, not business.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="mt-3 flex items-center gap-2 text-sm text-white/90"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <MapPin className="h-4 w-4 text-accent" />
+            {SITE.city}
           </motion.div>
         </div>
-      </section>
+
+        <div className="flex flex-wrap gap-3">
+          <motion.a
+            href={`tel:${SITE.phone}`}
+            className="btn-primary text-base !py-3.5 !px-7 relative overflow-hidden group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              <Phone className="h-4 w-4" /> Call Now
+            </span>
+            <motion.span
+              className="absolute inset-0 bg-accent"
+              initial={{ x: "-100%" }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+          </motion.a>
+          <motion.a
+            href={`https://wa.me/${SITE.whatsapp}`}
+            target="_blank" rel="noreferrer"
+            className="btn-outline text-base !py-3.5 !px-7 border-white/30 hover:bg-white/10"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <MessageSquare className="h-4 w-4" /> WhatsApp
+          </motion.a>
+        </div>
+      </div>
+    </motion.div>
+  </div>
+</section>
 
       {/* Service quick list */}
       <section className="hidden">
@@ -1400,13 +1699,13 @@ export function SectionHead({
   eyebrow, title, sub, light = false,
 }: { eyebrow: string; title: string; sub?: string; light?: boolean }) {
   return (
-    <motion.div 
+    <motion.div
       className="max-w-2xl"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <motion.span 
+      <motion.span
         className={`text-sm font-semibold uppercase tracking-wider ${light ? "text-accent" : "text-accent"}`}
         whileHover={{ letterSpacing: "0.1em" }}
         transition={{ duration: 0.3 }}
@@ -1421,7 +1720,6 @@ export function SectionHead({
   );
 }
 
-// silence unused warnings for icons imported for potential future use
 void ChevronRight;
 void Globe;
 void Heart;
