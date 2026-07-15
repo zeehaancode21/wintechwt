@@ -36,7 +36,7 @@ export function Footer() {
           </p>
           <div className="mt-4 flex gap-3">
             <motion.a
-              href="#"
+              href="/"
               aria-label="Facebook"
               whileHover={{ scale: 1.12, rotate: -6 }}
               whileTap={{ scale: 0.94 }}
@@ -45,7 +45,7 @@ export function Footer() {
               <Facebook className="h-4 w-4" />
             </motion.a>
             <motion.a
-              href="#"
+              href="/"
               aria-label="Instagram"
               whileHover={{ scale: 1.12, rotate: 6 }}
               whileTap={{ scale: 0.94 }}
