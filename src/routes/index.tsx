@@ -32,6 +32,8 @@ import {
   ThumbsUp,
   User,
   ChevronLeft,
+  Play,
+  Pause,
 } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { SERVICES } from "@/lib/services";
@@ -597,12 +599,13 @@ const ClickableTestimonialTile = ({ testimonial, onClick }: {
   );
 };
 
-// Fixed Carousel Component with Countdown Timer
 const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [showHoverEffect, setShowHoverEffect] = useState(false);
   const CAROUSEL_INTERVAL = 5000; // 5 seconds
+  let hoverTimeout: NodeJS.Timeout;
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % items.length);
@@ -614,11 +617,12 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
     setProgress(0);
   };
 
+  // Timer effect - pauses when hovered
   useEffect(() => {
-    if (!isAutoPlaying) return;
-
     const startTime = Date.now();
-    const timer = setInterval(() => {
+    let timer: NodeJS.Timeout;
+
+    const updateProgress = () => {
       const elapsed = Date.now() - startTime;
       const newProgress = (elapsed / CAROUSEL_INTERVAL) * 100;
 
@@ -628,23 +632,106 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
       } else {
         setProgress(newProgress);
       }
-    }, 50); // Update every 50ms for smooth animation
+    };
 
-    return () => clearInterval(timer);
-  }, [isAutoPlaying, currentIndex, items.length]);
+    // Only run the interval if NOT hovered
+    if (!isHovered) {
+      timer = setInterval(updateProgress, 50);
+    }
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [isHovered, currentIndex, items.length]);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    setShowHoverEffect(true);
+    
+    if (hoverTimeout) clearTimeout(hoverTimeout);
+    
+    hoverTimeout = setTimeout(() => {
+      setShowHoverEffect(false);
+    }, 3000);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setShowHoverEffect(false);
+    if (hoverTimeout) clearTimeout(hoverTimeout);
+  };
 
   const currentItem = items[currentIndex];
 
+  // Calculate remaining seconds
+  const remainingSeconds = Math.ceil((100 - progress) / 20);
+
   return (
-    <div className="relative w-full max-w-3xl mx-auto">
+    <div 
+      className="relative w-full max-w-3xl mx-auto"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Testimonial Card */}
-      <div className="relative rounded-2xl bg-card border border-border p-6 sm:p-8 shadow-lg">
+      <motion.div 
+        className="relative rounded-2xl bg-card border border-border p-6 sm:p-8 shadow-lg overflow-hidden"
+        animate={{
+          background: showHoverEffect 
+            ? 'linear-gradient(135deg, rgba(251, 146, 60, 0.08) 0%, rgba(251, 146, 60, 0.02) 100%)'
+            : 'rgba(255, 255, 255, 0)',
+          borderColor: showHoverEffect ? 'rgba(251, 146, 60, 0.3)' : 'rgba(0, 0, 0, 0.1)',
+          boxShadow: showHoverEffect 
+            ? '0 20px 40px rgba(251, 146, 60, 0.15), 0 0 0 1px rgba(251, 146, 60, 0.1)'
+            : '0 10px 30px rgba(0, 0, 0, 0.05)',
+        }}
+        transition={{ 
+          duration: 0.6,
+          ease: "easeInOut"
+        }}
+      >
+        {/* Animated Orange Glow */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          animate={{
+            background: showHoverEffect 
+              ? 'radial-gradient(circle at 30% 50%, rgba(251, 146, 60, 0.15), transparent 70%)'
+              : 'radial-gradient(circle at 30% 50%, rgba(251, 146, 60, 0), transparent 70%)',
+            scale: showHoverEffect ? 1.1 : 1,
+          }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        />
+
+        {/* Animated Orange Border Glow */}
+        <motion.div
+          className="absolute inset-0 rounded-2xl pointer-events-none"
+          animate={{
+            boxShadow: showHoverEffect
+              ? 'inset 0 0 50px rgba(251, 146, 60, 0.05)'
+              : 'inset 0 0 0px rgba(251, 146, 60, 0)',
+          }}
+          transition={{ duration: 0.6 }}
+        />
+
+        {/* Hover pause indicator - subtle */}
+        {isHovered && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute top-4 left-4 z-20"
+          >
+            <span className="text-[10px] text-accent/60 font-medium bg-accent/5 px-2 py-1 rounded-full">
+              ⏸
+            </span>
+          </motion.div>
+        )}
+
         <div className="absolute top-4 right-4 text-accent/20">
           <Quote className="h-12 w-12" />
         </div>
 
-        <div className="relative">
-          {/* Rating - Fixed position above text */}
+        <div className="relative z-10">
+          {/* Rating */}
           <div className="flex items-center gap-1 mb-4">
             {[1, 2, 3, 4, 5].map((star) => (
               <Star key={star} className="h-4 w-4 fill-accent text-accent" />
@@ -664,33 +751,62 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
             </div>
           </div>
         </div>
-      </div>
+
+        {/* Orange pulsing dot on hover */}
+        <motion.div
+          className="absolute -top-1 -right-1 w-20 h-20 pointer-events-none"
+          animate={{
+            opacity: showHoverEffect ? 1 : 0,
+          }}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="absolute inset-0 bg-accent/5 rounded-full blur-xl" />
+        </motion.div>
+      </motion.div>
 
       {/* Progress Bar with Timer */}
       <div className="mt-6">
         <div className="flex items-center justify-between gap-4 mb-2">
           <span className="text-xs text-muted-foreground">
-            Auto-slide in <span className="font-semibold text-accent">{Math.ceil((100 - progress) / 20)}s</span>
+            Next slide in{' '}
+            <span className={`font-semibold ${isHovered ? 'text-muted-foreground' : 'text-accent'}`}>
+              {isHovered ? '⏸' : remainingSeconds}s
+            </span>
           </span>
-          <button
-            onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-            className="text-xs text-muted-foreground hover:text-accent transition-colors"
-          >
-            {isAutoPlaying ? 'Pause' : 'Play'}
-          </button>
+          {isHovered && (
+            <span className="text-[10px] text-accent/60 font-medium">
+              Paused
+            </span>
+          )}
         </div>
 
         {/* Progress Bar */}
-        <div className="h-1 w-full rounded-full bg-accent/10 overflow-hidden">
+        <div className="h-1 w-full rounded-full bg-accent/10 overflow-hidden relative">
           <motion.div
             className="h-full rounded-full bg-gradient-to-r from-accent to-primary"
             style={{ width: `${progress}%` }}
             transition={{ duration: 0.05 }}
+            animate={{
+              opacity: isHovered ? 0.4 : 1,
+            }}
           />
+          {isHovered && (
+            <motion.div
+              className="h-full w-full rounded-full bg-accent/20 absolute top-0 left-0"
+              animate={{
+                opacity: [0.2, 0.5, 0.2],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          )}
         </div>
       </div>
 
-      {/* Navigation Controls - With more bottom spacing */}
+      {/* Navigation Controls */}
       <div className="flex items-center justify-center gap-4 mt-6 pt-2">
         <motion.button
           onClick={prevSlide}
@@ -711,8 +827,11 @@ const FixedTestimonialsCarousel = ({ items }: { items: Testimonial[] }) => {
                 setCurrentIndex(index);
                 setProgress(0);
               }}
-              className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex ? 'w-8 bg-accent' : 'w-2 bg-accent/30 hover:bg-accent/50'
-                }`}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                index === currentIndex 
+                  ? 'w-8 bg-accent' 
+                  : 'w-2 bg-accent/30 hover:bg-accent/50'
+              }`}
               aria-label={`Go to testimonial ${index + 1}`}
             />
           ))}

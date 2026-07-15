@@ -1,18 +1,29 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Mail, MapPin, Phone, Clock } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Phone, Clock, ArrowUpRight } from "lucide-react";
+import { motion } from "framer-motion";
 import { SITE } from "@/lib/site";
 import { SERVICES } from "@/lib/services";
+import { Reveal } from "./motion";
 
 export function Footer() {
   return (
-    <footer className="bg-charcoal text-white/80">
-      <div className="container-x grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
-        <div>
+    <footer className="relative overflow-hidden bg-charcoal text-white/80">
+      {/* Ambient glow blobs — echoes the accent/cyan glow language used in Hero & CTA sections */}
+      <div className="pointer-events-none absolute -top-24 -left-20 h-72 w-72 rounded-full bg-accent/10 blur-3xl animate-blob-1" />
+      <div className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-cyan/10 blur-3xl animate-blob-2" />
+
+      {/* Top accent line */}
+      <div className="relative h-px w-full bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
+
+      <div className="container-x relative grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
+        <Reveal>
           <div className="flex items-center gap-2">
-            <img
+            <motion.img
               src={`${import.meta.env.BASE_URL}logo-white.png`}
               alt={SITE.shortName}
               className="h-10 w-10 rounded-md object-contain"
+              whileHover={{ rotate: -8, scale: 1.08 }}
+              transition={{ type: "spring", stiffness: 300, damping: 12 }}
             />
             <div>
               <div className="font-display font-bold text-white text-lg">{SITE.shortName}</div>
@@ -24,24 +35,28 @@ export function Footer() {
             software and electrical works in Mysore.
           </p>
           <div className="mt-4 flex gap-3">
-            <a
+            <motion.a
               href="#"
               aria-label="Facebook"
+              whileHover={{ scale: 1.12, rotate: -6 }}
+              whileTap={{ scale: 0.94 }}
               className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-accent transition-colors"
             >
               <Facebook className="h-4 w-4" />
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="#"
               aria-label="Instagram"
+              whileHover={{ scale: 1.12, rotate: 6 }}
+              whileTap={{ scale: 0.94 }}
               className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-accent transition-colors"
             >
               <Instagram className="h-4 w-4" />
-            </a>
+            </motion.a>
           </div>
-        </div>
+        </Reveal>
 
-        <div>
+        <Reveal delay={80}>
           <h4 className="text-white font-semibold mb-4">Quick Links</h4>
           <ul className="space-y-2 text-sm">
             {[
@@ -53,60 +68,78 @@ export function Footer() {
               { to: "/contact", label: "Contact" },
             ].map((l) => (
               <li key={l.to}>
-                <Link to={l.to} className="hover:text-accent transition-colors">
-                  {l.label}
+                <Link
+                  to={l.to}
+                  className="group inline-flex items-center gap-1.5 hover:text-accent transition-colors"
+                >
+                  <span className="relative">
+                    {l.label}
+                    <span className="absolute left-0 -bottom-0.5 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
+                  </span>
+                  <ArrowUpRight className="h-3 w-3 opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
 
-        <div>
+        <Reveal delay={160}>
           <h4 className="text-white font-semibold mb-4">Our Services</h4>
           <ul className="space-y-2 text-sm">
             {SERVICES.map((s) => (
               <li key={s.slug}>
-                <Link to="/services" hash={s.slug} className="hover:text-accent transition-colors">
-                  {s.title}
+                <Link
+                  to="/services"
+                  hash={s.slug}
+                  className="group inline-flex items-center gap-1.5 hover:text-accent transition-colors"
+                >
+                  <span className="relative">
+                    {s.title}
+                    <span className="absolute left-0 -bottom-0.5 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
+                  </span>
+                  <ArrowUpRight className="h-3 w-3 opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
 
-        <div>
+        <Reveal delay={240}>
           <h4 className="text-white font-semibold mb-4">Get in Touch</h4>
           <ul className="space-y-3 text-sm">
-            <li className="flex gap-3">
-              <MapPin className="h-4 w-4 mt-0.5 text-accent shrink-0" />
+            <li className="group flex gap-3">
+              <MapPin className="h-4 w-4 mt-0.5 text-accent shrink-0 transition-transform duration-300 group-hover:scale-110" />
               <span>{SITE.city}</span>
             </li>
-            <li className="flex gap-3">
-              <Phone className="h-4 w-4 mt-0.5 text-accent shrink-0" />
-              <a href={`tel:${SITE.phone}`} className="hover:text-accent">
+            <li className="group flex gap-3">
+              <Phone className="h-4 w-4 mt-0.5 text-accent shrink-0 transition-transform duration-300 group-hover:scale-110" />
+              <a href={`tel:${SITE.phone}`} className="hover:text-accent transition-colors">
                 {SITE.phoneDisplay}
               </a>
             </li>
-            <li className="flex gap-3">
-              <Mail className="h-4 w-4 mt-0.5 text-accent shrink-0" />
-              <a href={`mailto:${SITE.email}`} className="hover:text-accent break-all">
+            <li className="group flex gap-3">
+              <Mail className="h-4 w-4 mt-0.5 text-accent shrink-0 transition-transform duration-300 group-hover:scale-110" />
+              <a href={`mailto:${SITE.email}`} className="hover:text-accent transition-colors break-all">
                 {SITE.email}
               </a>
             </li>
-            <li className="flex gap-3">
-              <Clock className="h-4 w-4 mt-0.5 text-accent shrink-0" />
+            <li className="group flex gap-3">
+              <Clock className="h-4 w-4 mt-0.5 text-accent shrink-0 transition-transform duration-300 group-hover:scale-110" />
               <span>{SITE.hours}</span>
             </li>
           </ul>
-        </div>
+        </Reveal>
       </div>
 
-      <div className="border-t border-white/10">
+      <div className="relative border-t border-white/10">
         <div className="container-x py-5 text-xs text-white/60 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div>
             © {new Date().getFullYear()} {SITE.name}. All rights reserved.
           </div>
-          <div>Sales • Service • AMC • {SITE.city}</div>
+          <div className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+            Sales • Service • AMC • {SITE.city}
+          </div>
         </div>
       </div>
     </footer>
