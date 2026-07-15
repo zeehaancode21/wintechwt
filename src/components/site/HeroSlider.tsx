@@ -104,10 +104,10 @@ export function HeroSlider() {
             transition={{ duration: 0.8 }}
             className="max-w-5xl"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold backdrop-blur-sm">
+            {/* <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold backdrop-blur-sm">
               <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
               Serving Mysore since 2013 · Sales · Service · AMC
-            </div>
+            </div> */}
 
             <motion.h1
               className="font-display mt-6 text-4xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl"
