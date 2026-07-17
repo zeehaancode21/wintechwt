@@ -5,6 +5,10 @@ import { SITE } from "@/lib/site";
 import { SERVICES } from "@/lib/services";
 import { Reveal } from "./motion";
 
+const SLOGAN_WORDS = SITE.slogan.split(" ");
+const SLOGAN_LEAD = SLOGAN_WORDS.slice(0, -1).join(" ");
+const SLOGAN_LAST = SLOGAN_WORDS[SLOGAN_WORDS.length - 1];
+
 export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-charcoal text-white/80">
@@ -28,6 +32,9 @@ export function Footer() {
             <div>
               <div className="font-display font-bold text-white text-lg">{SITE.shortName}</div>
               <div className="text-[11px] uppercase tracking-wider text-white/60">Enterprises</div>
+              <div className="mt-0.5 text-xs font-medium text-white/70">
+                {SLOGAN_LEAD} <span className="font-semibold text-accent">{SLOGAN_LAST}</span>
+              </div>
             </div>
           </div>
           <p className="mt-4 text-sm leading-relaxed">

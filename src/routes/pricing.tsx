@@ -111,11 +111,7 @@ function Pricing() {
                   </ul>
                   <Link
                     to="/contact"
-                    className={`mt-8 inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold transition-all ${
-                      p.featured
-                        ? "bg-accent text-accent-foreground hover:bg-accent-hover"
-                        : "border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                    }`}
+                    className={`mt-8 ${p.featured ? "btn-primary" : "btn-ghost-primary"}`}
                   >
                     Request Quote
                   </Link>

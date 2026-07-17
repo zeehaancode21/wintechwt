@@ -1,8 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, Phone, X } from "lucide-react";
+import { ArrowRight, Menu, Phone, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SITE } from "@/lib/site";
+
+const SLOGAN_WORDS = SITE.slogan.split(" ");
+const SLOGAN_LEAD = SLOGAN_WORDS.slice(0, -1).join(" ");
+const SLOGAN_LAST = SLOGAN_WORDS[SLOGAN_WORDS.length - 1];
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -92,6 +96,24 @@ export function Header() {
             >
               Enterprises
             </div>
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className={`hidden md:block mt-0.5 text-[11px] lg:text-xs font-medium leading-tight transition-colors duration-500 ${
+                scrolled ? "text-foreground/70" : "text-white/90"
+              }`}
+            >
+              <span className="tracking-tight">{SLOGAN_LEAD}</span>{" "}
+              <span
+                className={`relative inline-block font-semibold transition-colors duration-500 after:absolute after:-bottom-0.5 after:left-0 after:h-[1.5px] after:w-0 after:rounded-full after:bg-accent after:transition-all after:duration-300 group-hover:after:w-full ${
+                  scrolled ? "text-accent" : "text-accent-foreground"
+                }`}
+                style={scrolled ? undefined : { color: "#FFD9A8" }}
+              >
+                {SLOGAN_LAST}
+              </span>
+            </motion.div>
           </div>
         </Link>
 
@@ -138,9 +160,10 @@ export function Header() {
             {SITE.phoneDisplay}
           </a>
 
-          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-            <Link to="/contact" className="hidden sm:inline-flex btn-primary !py-2.5 !px-4 text-xs">
+          <motion.div whileTap={{ scale: 0.97 }}>
+            <Link to="/contact" className="btn-quote hidden sm:inline-flex">
               Get a Quote
+              <ArrowRight className="btn-quote-icon h-3.5 w-3.5" />
             </Link>
           </motion.div>
 

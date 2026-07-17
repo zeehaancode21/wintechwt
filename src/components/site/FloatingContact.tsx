@@ -1,27 +1,126 @@
-import { Phone } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MessageCircle, MessageSquareText, Phone, X } from "lucide-react";
 import { SITE } from "@/lib/site";
 
+// Each option's position relative to the main FAB when expanded
+// (fans out in a gentle arc going up-and-left from the button)
+const OPTIONS = [
+  {
+    key: "call",
+    label: "Call",
+    href: `tel:${SITE.phone}`,
+    x: -4,
+    y: -78,
+    bg: "bg-primary",
+    icon: Phone,
+  },
+  {
+    key: "message",
+    label: "Message",
+    href: `sms:${SITE.phone}`,
+    x: -58,
+    y: -142,
+    bg: "bg-cyan",
+    icon: MessageSquareText,
+  },
+  {
+    key: "whatsapp",
+    label: "WhatsApp",
+    href: `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent("Hi Wintech, I'd like a quote.")}`,
+    x: -78,
+    y: -212,
+    bg: "bg-[#25D366]",
+    icon: MessageCircle,
+    external: true,
+  },
+] as const;
+
 export function FloatingContact() {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  // Close when clicking outside the widget
+  useEffect(() => {
+    if (!open) return;
+    const onClick = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, [open]);
+
   return (
-    <div className="fixed bottom-5 right-5 z-40 flex flex-col gap-3">
-      <a
-        href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent("Hi Wintech, I'd like a quote.")}`}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Chat on WhatsApp"
-        className="float-pulse grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-xl transition-transform hover:scale-110"
-      >
-        <svg viewBox="0 0 32 32" className="h-7 w-7" fill="currentColor" aria-hidden="true">
-          <path d="M19.11 17.28c-.28-.14-1.68-.83-1.94-.92-.26-.1-.45-.14-.64.14-.19.28-.73.92-.9 1.1-.16.19-.33.21-.61.07-.28-.14-1.19-.44-2.26-1.4-.83-.74-1.4-1.66-1.56-1.94-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.5-.07-.14-.64-1.54-.88-2.11-.23-.55-.47-.48-.64-.49l-.55-.01c-.19 0-.5.07-.76.35-.26.28-1 .98-1 2.38 0 1.4 1.02 2.75 1.17 2.94.14.19 2.02 3.08 4.89 4.32.68.3 1.21.47 1.62.6.68.22 1.3.19 1.79.11.55-.08 1.68-.69 1.92-1.35.24-.66.24-1.23.17-1.35-.07-.12-.26-.19-.54-.33zM16.02 4C9.4 4 4.06 9.34 4.06 15.95c0 2.11.55 4.16 1.6 5.97L4 28l6.24-1.63a11.9 11.9 0 005.78 1.47h.01c6.6 0 11.95-5.34 11.95-11.95C27.98 9.34 22.63 4 16.02 4z" />
-        </svg>
-      </a>
-      <a
-        href={`tel:${SITE.phone}`}
-        aria-label="Call now"
-        className="grid h-14 w-14 place-items-center rounded-full bg-accent text-white shadow-xl transition-transform hover:scale-110"
-      >
-        <Phone className="h-6 w-6" />
-      </a>
+    <div ref={rootRef} className="fixed bottom-5 right-5 z-40">
+      {/* Backdrop — dims the page slightly while options are open */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setOpen(false)}
+            className="fixed inset-0 -z-10 bg-charcoal/10 backdrop-blur-[1px]"
+          />
+        )}
+      </AnimatePresence>
+
+      <div className="relative h-14 w-14">
+        {/* THREE EXPANDING CIRCLES: WhatsApp / Message / Call */}
+        <AnimatePresence>
+          {open &&
+            OPTIONS.map((opt, i) => {
+              const Icon = opt.icon;
+              return (
+                <motion.a
+                  key={opt.key}
+                  href={opt.href}
+                  target={opt.external ? "_blank" : undefined}
+                  rel={opt.external ? "noreferrer" : undefined}
+                  aria-label={opt.label}
+                  initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                  animate={{ opacity: 1, scale: 1, x: opt.x, y: opt.y }}
+                  exit={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 320,
+                    damping: 20,
+                    delay: i * 0.06,
+                  }}
+                  className={`group absolute bottom-0 right-0 grid h-14 w-14 place-items-center rounded-full text-white shadow-xl ${opt.bg}`}
+                >
+                  <Icon className="h-6 w-6" />
+                  {/* Tooltip label */}
+                  <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-md bg-charcoal px-2.5 py-1 text-xs font-medium text-white opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100">
+                    {opt.label}
+                  </span>
+                </motion.a>
+              );
+            })}
+        </AnimatePresence>
+
+        {/* MAIN FAB TOGGLE — blinking glow when closed */}
+        <motion.button
+          type="button"
+          aria-label={open ? "Close contact options" : "Contact us"}
+          onClick={() => setOpen((v) => !v)}
+          whileTap={{ scale: 0.92 }}
+          animate={{ rotate: open ? 45 : 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 18 }}
+          className={`absolute bottom-0 right-0 grid h-14 w-14 place-items-center rounded-full text-white shadow-xl transition-colors duration-300 ${
+            open ? "bg-primary chat-fab-open" : "bg-accent chat-fab-blink"
+          }`}
+        >
+          {open ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <MessageCircle className="h-7 w-7" />
+          )}
+        </motion.button>
+      </div>
     </div>
   );
 }

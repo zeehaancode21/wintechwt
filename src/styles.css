@@ -93,15 +93,40 @@
 }
 
 @utility btn-primary {
-  @apply inline-flex items-center justify-center gap-2 rounded-md bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/25 transition-all hover:bg-accent-hover hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/30;
+  @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-md px-6 py-3 text-sm font-semibold text-accent-foreground shadow-md shadow-accent/20 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/25 active:translate-y-0 active:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
+  background-image: linear-gradient(115deg, var(--accent) 0%, var(--accent) 42%, var(--accent-hover) 50%, var(--accent) 58%, var(--accent) 100%);
+  background-size: 240% 100%;
+  background-position: 100% 0;
+  transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+.btn-primary:hover {
+  background-position: 0 0;
 }
 
 @utility btn-outline {
-  @apply inline-flex items-center justify-center gap-2 rounded-md border-2 border-white/80 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white hover:text-primary;
+  @apply inline-flex items-center justify-center gap-2 rounded-md border-2 border-white/80 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2;
 }
 
 @utility btn-ghost-primary {
-  @apply inline-flex items-center justify-center gap-2 rounded-md border-2 border-primary bg-transparent px-6 py-3 text-sm font-semibold text-primary transition-all hover:bg-primary hover:text-primary-foreground;
+  @apply inline-flex items-center justify-center gap-2 rounded-md border-2 border-primary bg-transparent px-6 py-3 text-sm font-semibold text-primary transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+}
+
+/* Large pill CTA used for hero-level buttons (e.g. HeroSlider, PageHero) */
+@utility btn-hero {
+  @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-8 py-3.5 text-sm sm:text-base font-semibold text-accent-foreground shadow-xl shadow-accent/25 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-accent/35 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2;
+  background-image: linear-gradient(115deg, var(--accent) 0%, var(--accent) 42%, var(--accent-hover) 50%, var(--accent) 58%, var(--accent) 100%);
+  background-size: 240% 100%;
+  background-position: 100% 0;
+  transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+.btn-hero:hover {
+  background-position: 0 0;
+}
+.btn-hero .btn-hero-icon {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn-hero:hover .btn-hero-icon {
+  transform: translateX(3px);
 }
 
 @utility section-pad {
@@ -151,4 +176,78 @@
 
 .animate-card-glow {
   animation: card-glow-pulse 6s ease-in-out infinite;
+}
+
+/* ===== "Get a Quote" header button — refined, professional, hover-driven ===== */
+.btn-quote {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  padding: 0.6rem 1.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fff;
+  background-image: linear-gradient(115deg, var(--accent) 0%, var(--accent) 42%, var(--accent-hover) 50%, var(--accent) 58%, var(--accent) 100%);
+  background-size: 240% 100%;
+  background-position: 100% 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 16px -4px rgba(255, 107, 53, 0.45);
+  transition:
+    background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
+}
+.btn-quote:hover {
+  background-position: 0 0;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -6px rgba(255, 107, 53, 0.55);
+}
+.btn-quote:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px -4px rgba(255, 107, 53, 0.45);
+}
+.btn-quote:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9), 0 0 0 4px var(--accent);
+}
+.btn-quote-icon {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn-quote:hover .btn-quote-icon {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-quote,
+  .btn-primary,
+  .btn-hero {
+    transition: none !important;
+  }
+  .btn-quote:hover,
+  .btn-primary:hover,
+  .btn-hero:hover {
+    transform: none !important;
+  }
+}
+
+/* ===== Floating chat FAB — blinking glow + expand-to-3-circles ===== */
+@keyframes chat-fab-blink {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.55), 0 8px 24px -4px rgba(255, 107, 53, 0.5); }
+  50% { box-shadow: 0 0 0 16px rgba(255, 107, 53, 0), 0 8px 24px -4px rgba(255, 107, 53, 0.5); }
+}
+.chat-fab-blink {
+  animation: chat-fab-blink 2.2s ease-in-out infinite;
+}
+
+@keyframes chat-fab-blink-open {
+  0%, 100% { box-shadow: 0 8px 24px -4px rgba(16, 55, 92, 0.35); }
+}
+.chat-fab-open {
+  animation: chat-fab-blink-open 1s ease-out;
 }

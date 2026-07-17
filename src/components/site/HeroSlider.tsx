@@ -4,16 +4,26 @@ import { ArrowRight, ChevronDown, Phone } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { SITE } from "@/lib/site";
 
-/* Curated, verified free-to-use images (Unsplash License — free for
-   commercial use, no attribution required). Swapped in for a live
-   Unsplash API call so there's no third-party key or rate limit risk. */
-const HERO_IMAGES = [
-  "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=80", // IT / office tech
-  "https://images.unsplash.com/photo-1642606570507-ca8e13b8784d?auto=format&fit=crop&w=1920&q=80", // CCTV camera
-  "https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?auto=format&fit=crop&w=1920&q=80", // Server rack
+// IMPORTANT: Replace this with your own Unsplash API key
+// Get one at: https://unsplash.com/developers
+const UNSPLASH_ACCESS_KEY = "beUQwqByJ8Q0W1geBx-UbB12yF49uXrQND0FYYlspQM";
+
+// High-quality fallback images that are guaranteed to work
+const FALLBACK_IMAGES = [
+  "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=80",
+  "https://images.unsplash.com/photo-1642606570507-ca8e13b8784d?auto=format&fit=crop&w=1920&q=80",
+  "https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?auto=format&fit=crop&w=1920&q=80",
+  "https://images.unsplash.com/photo-1581092921461-7031e3e6d0f7?auto=format&fit=crop&w=1920&q=80", // Tech office
+  "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80", // Circuit board
+  "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1920&q=80", // Server room
 ];
 
-/* Rotating headline + subtitle content, tuned to Wintech's actual services */
+interface UnsplashPhoto {
+  urls: { regular: string };
+  alt_description?: string;
+  description?: string;
+}
+
 const heroContent = [
   {
     title: "Complete CCTV Surveillance Solutions",
@@ -54,33 +64,169 @@ const heroContent = [
 ];
 
 export function HeroSlider() {
+  const [photos, setPhotos] = useState<string[]>(FALLBACK_IMAGES);
   const [currentImage, setCurrentImage] = useState(0);
   const [currentText, setCurrentText] = useState(0);
+  const [isUsingFallback, setIsUsingFallback] = useState(true);
 
-  /* IMAGE ROTATION — every 3s */
+  // FETCH LIVE IMAGES FROM UNSPLASH WITH MULTIPLE FALLBACK STRATEGIES
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev === HERO_IMAGES.length - 1 ? 0 : prev + 1));
-    }, 3000);
-    return () => clearInterval(interval);
+    const fetchPhotos = async () => {
+      try {
+        console.log("Attempting to fetch Unsplash images...");
+        
+        // Strategy 1: Try with the main query first
+        let imageUrls = await tryFetchWithQuery(
+          "cctv security camera server room network office technology"
+        );
+        
+        // Strategy 2: If first strategy fails, try more specific queries
+        if (!imageUrls || imageUrls.length === 0) {
+          console.log("Main query failed, trying specific queries...");
+          const specificQueries = [
+            "technology office network",
+            "server hardware data center",
+            "security camera surveillance",
+            "computer it professional"
+          ];
+          
+          for (const query of specificQueries) {
+            const result = await tryFetchWithQuery(query);
+            if (result && result.length > 0) {
+              imageUrls = result;
+              break;
+            }
+          }
+        }
+        
+        // Strategy 3: Try without any query (get random photos)
+        if (!imageUrls || imageUrls.length === 0) {
+          console.log("Specific queries failed, trying random photos...");
+          imageUrls = await tryFetchRandomPhotos();
+        }
+        
+        // If we got images, update state and mark as live
+        if (imageUrls && imageUrls.length > 0) {
+          setPhotos(imageUrls);
+          setIsUsingFallback(false);
+          console.log(`Successfully loaded ${imageUrls.length} images from Unsplash`);
+        } else {
+          console.log("All Unsplash strategies failed, using fallback images");
+          setIsUsingFallback(true);
+        }
+        
+      } catch (error) {
+        console.error("Failed to fetch Unsplash images, using fallback set:", error);
+        setIsUsingFallback(true);
+      }
+    };
+
+    // Helper function to try fetching with a specific query
+    const tryFetchWithQuery = async (query: string): Promise<string[] | null> => {
+      try {
+        const encodedQuery = encodeURIComponent(query);
+        const response = await fetch(
+          `https://api.unsplash.com/photos/random?query=${encodedQuery}&count=6&client_id=${UNSPLASH_ACCESS_KEY}`
+        );
+        
+        if (!response.ok) {
+          console.warn(`Query "${query}" failed with status: ${response.status}`);
+          return null;
+        }
+        
+        const data: UnsplashPhoto[] = await response.json();
+        if (!Array.isArray(data) || data.length === 0) {
+          return null;
+        }
+        
+        // Filter and map the results
+        const filtered = data.filter((photo) => {
+          const text = `${photo.alt_description || ""} ${photo.description || ""}`.toLowerCase();
+          return !(
+            text.includes("food") ||
+            text.includes("portrait") ||
+            text.includes("animal") ||
+            text.includes("person smiling") ||
+            text.includes("selfie")
+          );
+        });
+        
+        const imageUrls = (filtered.length ? filtered : data)
+          .slice(0, 6)
+          .map((photo) => `${photo.urls.regular}&auto=format&fit=crop&w=1920&q=80`);
+        
+        return imageUrls.length > 0 ? imageUrls : null;
+        
+      } catch (error) {
+        console.warn(`Error fetching with query "${query}":`, error);
+        return null;
+      }
+    };
+    
+    // Helper function to try fetching random photos
+    const tryFetchRandomPhotos = async (): Promise<string[] | null> => {
+      try {
+        const response = await fetch(
+          `https://api.unsplash.com/photos/random?count=6&client_id=${UNSPLASH_ACCESS_KEY}`
+        );
+        
+        if (!response.ok) {
+          console.warn(`Random fetch failed with status: ${response.status}`);
+          return null;
+        }
+        
+        const data: UnsplashPhoto[] = await response.json();
+        if (!Array.isArray(data) || data.length === 0) {
+          return null;
+        }
+        
+        return data
+          .slice(0, 6)
+          .map((photo) => `${photo.urls.regular}&auto=format&fit=crop&w=1920&q=80`);
+          
+      } catch (error) {
+        console.warn("Error fetching random photos:", error);
+        return null;
+      }
+    };
+
+    fetchPhotos();
   }, []);
 
-  /* TEXT ROTATION — every 5s, offset from images so both feel intentional */
+  // PRELOAD IMAGES for smooth transitions
+  useEffect(() => {
+    photos.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, [photos]);
+
+  // IMAGE ROTATION
+  useEffect(() => {
+    if (photos.length === 0) return;
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev === photos.length - 1 ? 0 : prev + 1));
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [photos]);
+
+  // TEXT ROTATION
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentText((prev) => (prev === heroContent.length - 1 ? 0 : prev + 1));
-    }, 5000);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* BACKGROUND IMAGES */}
-      {HERO_IMAGES.map((img, index) => (
+      {photos.map((img, index) => (
         <img
           key={img}
           src={img}
           alt="Wintech Enterprises — IT, CCTV, servers and electrical services"
+          loading={index === 0 ? "eager" : "lazy"}
           className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[2000ms] ease-in-out will-change-[opacity,transform] transform-gpu ${
             index === currentImage ? "opacity-100 scale-100" : "opacity-0 scale-110"
           }`}
@@ -93,6 +239,13 @@ export function HeroSlider() {
       {/* ACCENT GLOW */}
       <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/10 blur-3xl animate-pulse" />
 
+      {/* STATUS INDICATOR - Optional, shows if using fallback */}
+      {isUsingFallback && (
+        <div className="absolute bottom-20 left-1/2 z-20 -translate-x-1/2 rounded-full bg-black/50 px-4 py-1 text-xs text-white/50 backdrop-blur-sm">
+          Using fallback images
+        </div>
+      )}
+
       {/* CONTENT */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
         <AnimatePresence mode="wait">
@@ -104,11 +257,6 @@ export function HeroSlider() {
             transition={{ duration: 0.8 }}
             className="max-w-5xl"
           >
-            {/* <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold backdrop-blur-sm">
-              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
-              Serving Mysore since 2013 · Sales · Service · AMC
-            </div> */}
-
             <motion.h1
               className="font-display mt-6 text-4xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl"
               initial={{ opacity: 0, letterSpacing: "0.15em" }}
@@ -157,14 +305,9 @@ export function HeroSlider() {
           transition={{ delay: 0.8 }}
           className="mt-12 flex flex-wrap justify-center gap-5"
         >
-          <Link
-            to="/contact"
-            className="group rounded-full bg-accent px-8 py-3 font-medium text-accent-foreground shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-accent/30"
-          >
-            <span className="flex items-center gap-2">
-              Get a Free Quote
-              <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </span>
+          <Link to="/contact" className="btn-hero">
+            Get a Free Quote
+            <ArrowRight size={18} className="btn-hero-icon" />
           </Link>
 
           <a
