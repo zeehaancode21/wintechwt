@@ -84,7 +84,7 @@ const TESTIMONIALS: Testimonial[] = [
   { name: "Dr. Kiran M.", role: "Clinic Director", service: "Servers & Printers", text: "They set up our servers, printers and CCTV. Professional team, honest pricing. I recommend them to every clinic in my network." },
   { name: "Fathima Noor", role: "Manager, Silk Route Boutique", service: "CCTV Installation", text: "Our store had blind spots for years. Wintech mapped every corner and the footage quality at night is far better than our old system." },
   { name: "Suresh Gowda", role: "Proprietor, Gowda Hardware", service: "Billing Software", text: "Switched our old manual billing to their software in a single weekend. Staff picked it up fast and GST reports are now painless." },
-  { name: "Priya Ramesh", role: "Principal, Sunrise Public School", service: "Biometric Attendance", text: "Biometric attendance across three floors, all synced to one dashboard. Support calls get answered, not just logged." },
+  { name: "Priya Ramesh", role: "Principal, Sunrise Public School", service: "Biometric Attendance", text: "Cctv surveillance , all synced to one dashboard. Support calls get answered, not just logged." },
   { name: "Manjunath B.", role: "Facility Head, Vega Business Park", service: "Electrical Works", text: "Handled our panel upgrade and CCTV rewiring without a single day of disruption to tenants. Clear documentation after handover too." },
   { name: "Sneha Acharya", role: "Founder, Acharya Diagnostics", service: "IT Infrastructure", text: "They planned our server room from scratch — racks, UPS, networking. Two years in, everything still runs exactly as specified." },
   { name: "Vikram Shetty", role: "Director, Shetty Motors", service: "AMC Support", text: "What sold us was the AMC. One call and an engineer is on-site the same day, whether it's a printer or a full server issue." },
@@ -445,7 +445,7 @@ const ClickableTestimonialTile = memo(function ClickableTestimonialTile({
           <p className="text-sm text-muted-foreground line-clamp-3 mb-3">&ldquo;{testimonial.text}&rdquo;</p>
 
           <div className="flex items-center gap-1">
-            {[1, 2, 3, 4, 5].map((star) => (
+            {[1, 2, 3, 4].map((star) => (
               <Star key={star} className="h-3.5 w-3.5 fill-accent text-accent" />
             ))}
           </div>
@@ -1089,15 +1089,14 @@ function Home() {
                     }
                   }}
                 >
-                  <motion.p variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
-                    No sales tricks. No surprise add-ons. No "We'll call you back" that turns into next year. Just a free site visit and a clear, no-obligation quote.
-                  </motion.p>
+                  
                   <motion.p variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
                     We'll assess your site, understand your needs, and give you a transparent quote. No pressure, no hidden costs, and no mysterious "consultation fees" that appear out of nowhere.
                   </motion.p>
                   <motion.p variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
-                    Our engineer will inspect your site and recommend the right solution. We promise an honest quote—because guessing is for game shows, not business.
+                    No sales tricks. No surprise add-ons. No "We'll call you back" that turns into next year. Just a free site visit and a clear, no-obligation quote.
                   </motion.p>
+                  
                 </motion.div>
 
                 {/* Location */}
