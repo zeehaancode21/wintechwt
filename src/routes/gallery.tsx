@@ -39,7 +39,7 @@ const PROJECTS: Project[] = [
   { title: "Server rack & structured cabling", category: "Server & Network", img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=70" },
   { title: "Panel board & MCB installation", category: "Electrical", img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=900&q=70" },
   { title: "Biometric attendance for factory", category: "Biometrics", img: "https://images.unsplash.com/photo-1580927752452-89d86da3fa0a?auto=format&fit=crop&w=900&q=70" },
-  { title: "Yuvraj Comforts", category: "Hotel Maintenance", img: `${import.meta.env.BASE_URL}YUVRAJ COMFORTS.jpg` },
+  { title: "YUVRAJ COMFORTS", category: "Hotel Maintenance", img: `${import.meta.env.BASE_URL}YUVRAJ COMFORTS.jpg` },
   { title: "YUVRAJ PALACE INN", category: "Hotel Maintenance", img: `${import.meta.env.BASE_URL}YUVRAJ PALACE INN.jpg` },
   { title: "YUVRAJ GALAXY INN", category: "Hotel Maintenance", img: `${import.meta.env.BASE_URL}YUVRAJ GALAXY INN.jpg` },
   { title: "YUVRAJ LE ROYALE", category: "Hotel Maintenance", img: `${import.meta.env.BASE_URL}YUVRAJ LE ROYALE.jpg` },
