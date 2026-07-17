@@ -41,7 +41,7 @@ export function Footer() {
             Your trusted partner for CCTV, IT infrastructure, biometrics, printers, billing
             software and electrical works in Mysore.
           </p>
-          <div className="mt-4 flex gap-3">
+          {/* <div className="mt-4 flex gap-3">
             <motion.a
               href="/"
               aria-label="Facebook"
@@ -60,7 +60,7 @@ export function Footer() {
             >
               <Instagram className="h-4 w-4" />
             </motion.a>
-          </div>
+          </div> */}
         </Reveal>
 
         <Reveal delay={80}>
