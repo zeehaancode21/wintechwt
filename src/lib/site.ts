@@ -2,7 +2,7 @@ export const SITE = {
   name: "Wintech Enterprises",
   shortName: "Wintech",
   tagline: "IT, Security & Electrical Solutions",
-  slogan: "Electricity? Cameras? Servers? Done.",
+  slogan: "Tech trouble ends here.",
   description:
     "Wintech Enterprises — CCTV, computers, servers, networking, biometrics, printers, billing software and electrical works. Sales, service & AMC in Mysore.",
   city: "#763, MIG-1, Kalyangiri, Mysore, Karnataka 5770029",
